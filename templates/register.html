@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block head%}
+{{ super() }}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/auth.css') }}">
+<script type="text/javascript" src="{{ url_for('static', filename='js/auth.js') }}"></script>
+{% endblock %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+
+
+<div class="container">
+    
+    <div class="jumbotron">
+         <h1>Predict Registration Page</h1>
+    </div>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <div id="bottom-alert">
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ messages[0] }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>    
+            </div>
+        </div>
+        {% endif %}
+    {% endwith %}
+
+    <form method="POST" id="main-form">
+        <div class="form-group">
+            <label for="username">Username:</label>
+            <input class="form-control" name="username" id="username" title="{{ config['USERNAME_FEEDBACK'] }}" placeholder="Username" pattern="{{ config['USERNAME_REGEX'] }}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input class="form-control" name="password" id="password" title="{{ config['PASSWORD_FEEDBACK'] }}" type="password" placeholder="Password" pattern="{{ config['PASSWORD_REGEX'] }}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="confirm">Confirm Password:</label>
+            <input class="form-control" name="confirm" id="confirm" title="{{ config['PASSWORD_FEEDBACK'] }}" type="password" oninput="checkPassAndConfirm()" placeholder="Confirm Password" pattern="{{ config['PASSWORD_REGEX'] }}" required>
+        </div>
+
+        <input type="submit" class="btn btn-primary" value="Register">
+        <a class="btn btn-link" href="{{ url_for("main.login") }}">Already have an account? Log In!</a>
+    </form>
+</div>
+{% endblock %}
