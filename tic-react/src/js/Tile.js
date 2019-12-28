@@ -67,7 +67,6 @@ class Tile extends Component {
       }  
     }
 
-    //TODO: Maybe can have an update board function in TTT
     render() {
       return (
         <div onClick={this.playMoveRequest} className="Tile">
