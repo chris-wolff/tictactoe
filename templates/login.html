@@ -13,7 +13,7 @@
 <div class="container">
 
     <div class="jumbotron">
-         <h1>Predict Login Page</h1>
+         <h1>Py-TTT Login Page</h1>
     </div>
 
     {% with messages = get_flashed_messages() %}
@@ -41,9 +41,8 @@
         </div>
 
         <input type="submit" class="btn btn-primary" value="Login">
-        <a class="btn btn-link" href="{{ url_for("main.register") }}">Dont have an account? Sign Up!</a>
+        <a class="btn btn-link" href="{{ url_for("auth.register") }}">Dont have an account? Sign Up!</a>
     </form>
-    <!-- <a class="dropdown-item" href="#">Forgot password?</a> -->
 
 </div>
 {% endblock %}
