@@ -1,9 +1,11 @@
-#config
+# config
 *.json
 
-#contains ignore for python and React/JS stuff
-__pycache__/
+# database
+*.sqlite
 
+# contains ignore for python and React/JS stuff
+__pycache__/
 
 node_modules
 .pnp

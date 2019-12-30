@@ -1,22 +1,27 @@
 import re
-import socket
 
 import flask
 import flask_login
-import werkzeug.security
 import sqlalchemy
 
-import predict.db
-import predict.models
+import db
+import model
+
+# TODO: Figure out the easiest way to insert these into the register template
+USERNAME_REGEX = "\w+"
+PASSWORD_REGEX = "\w+"
+
+USERNAME_FEEDBACK = "username must be a letter, number, and/or underscore"
+PASSWORD_FEEDBACK = "password must be a letter, number, and/or underscore"
 
 
 def current_user():
-    """Return the currently authenticated user, or a placeholder"""
-    return flask_login.current_user.get_id() or socket.gethostname()
+    """Return the currently authenticated user"""
+    return flask_login.current_user.get_id()
 
 
 def create_user(username, password):
-    """Attempts to create a new user
+    """Attempts to create a new user and commit to database
     Args:
         username (str): The username for the new user
         password (str): The password for the new user
@@ -24,13 +29,11 @@ def create_user(username, password):
         True if the user was successfully created, False otherwise.
     """
     user = load_user(username)
-
+ 
     if user is None:
-        password_hash = werkzeug.security.generate_password_hash(password)
-        new_user = predict.models.User(username=username, password_hash=password_hash)
-        predict.db.Session.add(new_user)
-        predict.db.Session.commit()
-
+        new_user = model.User(username=username, password=password)
+        db.Session.add(new_user)
+        db.Session.commit()
         return True
     else:
         return False
@@ -47,9 +50,8 @@ def authenticate_user(username, password):
     user = load_user(username)
 
     if user is not None:
-        auth = werkzeug.security.check_password_hash(user.password_hash, password)
 
-        if auth:
+        if user.password == password:
             flask_login.login_user(user)
             return True
 
@@ -63,12 +65,7 @@ def load_user(username):
     Returns:
         The user with the given username or None if the user doesn't exist.
     """
-    user = (
-        predict.db.Session.query(predict.models.User)
-        .filter_by(username=username)
-        .scalar()
-    )
-    return user
+    return db.Session.query(model.User).filter_by(username=username).scalar()
 
 
 def string_match(string, regex):

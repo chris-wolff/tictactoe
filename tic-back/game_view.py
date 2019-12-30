@@ -10,7 +10,7 @@ from flask import request, abort, Blueprint
 from game import Game
 from games_helper import games, make_move
 
-game_bp = Blueprint('', __name__)
+game_bp = Blueprint("game", __name__)
  
 # Testing flask sever is up
 @game_bp.route('/')

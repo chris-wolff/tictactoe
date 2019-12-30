@@ -28,16 +28,12 @@ def login_post():
 @auth_bp.route("/logout")
 def logout():
     flask_login.logout_user()
-    return flask.redirect(flask.url_for("auth.base"))
+    return flask.redirect(flask.url_for("auth.login"))
 
 
 @auth_bp.route("/register", methods=["GET"])
 def register():
-    return flask.render_template(
-        "register.html",
-        user_regex=flask.current_app.config["USERNAME_REGEX"],
-        password_regex=flask.current_app.config["PASSWORD_REGEX"],
-    )
+    return flask.render_template("register.html")
 
 
 @auth_bp.route("/register", methods=["POST"])
@@ -50,23 +46,19 @@ def register_post():
         flask.flash("Passwords entered do not match! Please try again.")
         return flask.render_template("register.html")
 
-    if not predict.auth.string_match(
-        username, flask.current_app.config["USERNAME_REGEX"]
-    ):
-        flask.flash(flask.current_app.config["USERNAME_FEEDBACK"])
+    if not auth.string_match(username, auth.USERNAME_REGEX):
+        flask.flash(auth.USERNAME_FEEDBACK)
         return flask.render_template("register.html")
 
-    if not predict.auth.string_match(
-        password, flask.current_app.config["PASSWORD_REGEX"]
-    ):
-        flask.flash(flask.current_app.config["PASSWORD_FEEDBACK"])
+    if not auth.string_match(password, auth.PASSWORD_REGEX):
+        flask.flash(auth.PASSWORD_FEEDBACK)
         return flask.render_template("register.html")
 
-    created = predict.auth.create_user(username, password)
+    created = auth.create_user(username, password)
 
     if created:
         return flask.redirect(flask.url_for("auth.login"))
     else:
-        flask.flash("That username already exists! Please try again.")
+        flask.flash("Username already exists!")
         return flask.render_template("register.html")
 
