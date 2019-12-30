@@ -19,11 +19,9 @@ Tic-Tac-Toe with a Python/Flask server back-end for controlling the program logi
 
 1) In the root reposity, `tictactoe`, install Flask and Flask CORS and py-TTT with `pip install tic-back`
 2) Run the back-end with `python __main__.py` or `python3 __main__.py`
-3) (Optional) Alias with `set FLASK_ENV=development` (Windows) to avoid rerunning `python -m tic_back` on modified changes. (React will automatically recompile on changes.)
-4) Run the back-end server with the command `flask run` in the folder `server_and_game_logic`. 
 
 ### A Note on CORS
-Certain browsers will not allow certain communication between the React app and Flask server if they are on different ports of the same localmachine (`localhost`). It is considered suspicious activity by the browser. (The Flask server is supposed to workaround this with step 3, but there is a [problem](https://github.com/bmdvpanga/tictactoe/issues/19).) As a hotfix, you can run Chrome (the reccomended browser for testing this application) with CORS features disabled. To run Chrome with command line arguments you can simply add `chrome.exe` to your environment variables/PATH, and in the terminal enter the command `chrome --disable-web-security`.
+Certain browsers will not allow communication between the React app and Flask server if they are on different ports of the same localmachine (`localhost`). It is considered suspicious activity by the browser. As a hotfix, you can run Chrome (the reccomended browser for testing this application) with CORS features disabled. To run Chrome with command line arguments you can simply add `chrome.exe` to your environment variables/PATH, and in the terminal enter the command `chrome --disable-web-security`.
 
 ### Testing
 

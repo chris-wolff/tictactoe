@@ -37,8 +37,8 @@ class Tile extends Component {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },body: JSON.stringify({"boardKey": this.props.boardKey})})
-            .then(response => response.json())//Turn the response into json as soon as the asynchronous (promise?) is resolved.
-            .then(this.handleResponse) // I think this means that as as soon as the asynchronous call is complete, then call the function.
+            .then(response => response.json())
+            .then(this.handleResponse) 
             .catch(error => console.error("Problem with sending the move request.")); 
     }
 

@@ -6,6 +6,11 @@ import auth
 
 auth_bp = flask.Blueprint("auth", __name__)
 
+@auth_bp.route("/user", methods=["GET"])
+def user():
+    print(str(auth.current_user()))
+    return str(auth.current_user())
+
 @auth_bp.route("/login", methods=["GET"])
 def login():
     return flask.render_template("login.html", invalidLogin=False)
@@ -16,14 +21,12 @@ def login_post():
     username = flask.request.form["username"]
     password = flask.request.form["password"]
 
-    authorized = auth.authenticate_user(username, password)
-
-    if authorized:
-       return "Welcome, " + username + " the TTT dash should go here."
+    # Link to the TTT React application
+    if auth.authenticate_user(username, password):
+       return flask.redirect("http://localhost:3000")
     else:
         flask.flash("Whoops, we don't recognize that account! Please try again.")
         return flask.render_template("login.html")
-
 
 @auth_bp.route("/logout")
 def logout():
