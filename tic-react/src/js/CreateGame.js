@@ -31,6 +31,7 @@ class CreateGame extends React.Component{
             
             //fetch requests wraps everything in a promise
             fetch(joined, {method: 'POST'})
+            .then(response => response.json())
             .then(json => this.props.callback(json))
             .catch(error => console.error(error)); 
         }

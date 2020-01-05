@@ -36,6 +36,10 @@ def configure_flask_login():
     import auth
     login_manager.user_loader(auth.load_user)
 
+    # Allow the react app to remember the login cookie.
+    login_manager.REMEMBER_COOKIE_DOMAIN = "http://localhost:3000"
+    login_manager.session_protection = None
+
 def register_blueprints():
     """
         Configuration helper.

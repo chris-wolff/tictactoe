@@ -39,6 +39,7 @@ def create_new_game():
     # This gnarly bit of code is so that we can also see the game_count in the JSON message. 
     # Only replaces the first bracket. TODO: Have this get done wherever a board is returned.   
     json_message = json_message.replace("{", "{\"game_count\": " + str(Game.game_count) + ", ", 1) 
+    # print(json_message)
     return json_message              
 
 @game_bp.route('/games/<int:game_id>', methods=['GET','PUT'])
